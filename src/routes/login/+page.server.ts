@@ -8,8 +8,14 @@ import bcrypt from 'bcrypt';
 //
 
 const loginSchema = z.object({
-	username: z.string(),
-	password: z.string().min(5)
+	username: z
+		.string()
+		.min(3)
+		.max(20)
+		.refine((value) => /^[a-zA-Z0-9]+$/.test(value), {
+			message: 'Username must contain only letters and numbers.'
+		}),
+	password: z.string().min(5).max(30)
 });
 
 export const load = async () => {

@@ -14,7 +14,7 @@ const registerSchema = z.object({
 			message: 'Username must contain only letters and numbers.'
 		}),
 	email: z.string().email(),
-	password: z.string().min(5),
+	password: z.string().min(5).max(30),
 	confirmPassword: z.string().min(5)
 });
 
