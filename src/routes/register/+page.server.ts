@@ -2,7 +2,7 @@ import type { Actions } from './$types';
 import { prisma } from '../../lib/server/prisma';
 import { fail } from '@sveltejs/kit';
 import { z } from 'zod';
-import { superValidate } from 'sveltekit-superforms/server';
+import { superValidate, setError } from 'sveltekit-superforms/server';
 
 const registerSchema = z.object({
 	username: z.string(),
@@ -44,12 +44,12 @@ export const actions = {
 			}
 		});
 		if (existingUser) {
-			return fail(400, { form });
+			return setError(form, 'username', 'Username already exists.');
 		}
 
 		//passwords don't match
 		if (password !== confirmPassword) {
-			return fail(400, { form });
+			return setError(form, 'password', 'Passwords do not match.');
 		}
 
 		//if all checks pass, create user
@@ -63,7 +63,7 @@ export const actions = {
 			});
 		} catch (err) {
 			console.log(err);
-			return fail(500, { message: 'Could not create the user.' });
+			return setError(form, 'username', 'An unexpected error occured.');
 		}
 
 		//return form for Superform
