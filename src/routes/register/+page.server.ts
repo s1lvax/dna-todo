@@ -3,6 +3,7 @@ import { prisma } from '../../lib/server/prisma';
 import { fail } from '@sveltejs/kit';
 import { z } from 'zod';
 import { superValidate, setError } from 'sveltekit-superforms/server';
+import bcrypt from 'bcrypt';
 
 const registerSchema = z.object({
 	username: z.string(),
@@ -52,13 +53,19 @@ export const actions = {
 			return setError(form, 'username', 'Username already exists.');
 		}
 
+		//encrypt password
+		const saltRounds = 10;
+
+		const salt = bcrypt.genSaltSync(saltRounds);
+		const hash = bcrypt.hashSync(password, salt);
+
 		//if all checks pass, create user
 		try {
 			await prisma.user.create({
 				data: {
 					username,
 					email,
-					password
+					hash
 				}
 			});
 		} catch (err) {
