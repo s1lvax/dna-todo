@@ -3,6 +3,7 @@ import { prisma } from '../../lib/server/prisma';
 import { fail } from '@sveltejs/kit';
 
 export const actions = {
+	//named default because there's just one
 	default: async ({ request }) => {
 		const { username, email, password, confirmPassword } = Object.fromEntries(
 			await request.formData()
@@ -14,7 +15,6 @@ export const actions = {
 				username: username
 			}
 		});
-
 		if (existingUser) {
 			return fail(400, { alreadyExists: true });
 		}
@@ -24,6 +24,7 @@ export const actions = {
 			return fail(400, { noMatch: true });
 		}
 
+		//if all checks pass, create user
 		try {
 			await prisma.user.create({
 				data: {
@@ -37,6 +38,7 @@ export const actions = {
 			return fail(500, { message: 'Could not create the user.' });
 		}
 
+		//return 201
 		return {
 			status: 201
 		};

@@ -1,2 +1,3 @@
-<h1>Hi baby</h1>
-<p>marry me</p>
+<h1>Main page</h1>
+<a href='/register'>Register</a>
+<a href="/login">Login</a>
