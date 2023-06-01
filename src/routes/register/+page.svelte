@@ -35,6 +35,7 @@
 		{#if $errors.confirmPassword}<span class="invalid">{$errors.confirmPassword}</span>{/if}
 		<button>Register{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin"></i></span>{/if}</button>
 	</form>
+	<p>Already have an account? <a href="/login">Login Here</a></p>
 </div>
 
 <style>

@@ -4,6 +4,9 @@ import { z } from 'zod';
 import { superValidate, setError } from 'sveltekit-superforms/server';
 import type { Actions } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
+import { loggedUser } from '../../lib/stores/UserStore';
+
+//
 
 const loginSchema = z.object({
 	username: z.string(),
@@ -47,6 +50,7 @@ export const actions = {
 			const passwordCheck = bcrypt.compareSync(password, existingUser.encryptedPassword);
 			//if it returns true, redirect user, if not -> error
 			if (passwordCheck) {
+				loggedUser.set({ username: existingUser.username, userid: existingUser.id }); // Set the loggedUser store with username and userid
 				throw redirect(301, '/dashboard');
 			} else {
 				return setError(form, 'password', 'Incorrect password.');
