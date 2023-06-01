@@ -44,6 +44,7 @@ export const actions = {
 		}
 
 		//user already exists
+		let hash = ''; //need to declare hash to an empty string because of Prisma
 		const existingUser = await prisma.user.findUnique({
 			where: {
 				username: username
@@ -58,7 +59,7 @@ export const actions = {
 			//encrypt password
 			const saltRounds = 10;
 			const salt = bcrypt.genSaltSync(saltRounds);
-			const hash = bcrypt.hashSync(password, salt);
+			hash = bcrypt.hashSync(password, salt);
 
 			//add user to db
 			await prisma.user.create({
