@@ -1,12 +1,41 @@
 import type { Actions } from './$types';
 import { prisma } from '../../lib/server/prisma';
 import { fail } from '@sveltejs/kit';
+import { z } from 'zod';
+import { superValidate } from 'sveltekit-superforms/server';
+
+const registerSchema = z.object({
+	username: z.string(),
+	email: z.string().email(),
+	password: z.string().min(5),
+	confirmPassword: z.string().min(5)
+});
+
+export const load = async () => {
+	// Server API:
+	const form = await superValidate(registerSchema);
+
+	//We need to always return form in Superforms
+	return { form };
+};
 
 export const actions = {
+	//named default because there's just one
 	default: async ({ request }) => {
-		const { username, email, password, confirmPassword } = Object.fromEntries(
-			await request.formData()
-		) as { username: string; email: string; password: string; confirmPassword: string };
+		//validate form using Zod
+		const form = await superValidate(request, registerSchema);
+		//return the error
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		//get data from form
+		const { username, email, password, confirmPassword } = form.data as {
+			username: string;
+			email: string;
+			password: string;
+			confirmPassword: string;
+		};
 
 		//user already exists
 		const existingUser = await prisma.user.findUnique({
@@ -14,16 +43,16 @@ export const actions = {
 				username: username
 			}
 		});
-
 		if (existingUser) {
-			return fail(400, { alreadyExists: true });
+			return fail(400, { form });
 		}
 
 		//passwords don't match
 		if (password !== confirmPassword) {
-			return fail(400, { noMatch: true });
+			return fail(400, { form });
 		}
 
+		//if all checks pass, create user
 		try {
 			await prisma.user.create({
 				data: {
@@ -37,8 +66,7 @@ export const actions = {
 			return fail(500, { message: 'Could not create the user.' });
 		}
 
-		return {
-			status: 201
-		};
+		//return form for Superform
+		return { form };
 	}
 } satisfies Actions;

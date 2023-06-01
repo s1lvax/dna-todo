@@ -1,29 +1,50 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { ActionData } from './$types';
+	//superforms
+	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	import type { PageData } from '.././$types';
+	import { superForm } from 'sveltekit-superforms/client'
+	export let data: PageData;
 
-	export let form: ActionData;
+	// superform API:
+	const { form, enhance, errors, constraints, delayed } = superForm(data.form);
 </script>
+<SuperDebug data={$form} />
+<div class="container">
+	<h1>Register</h1>
+	<form method="POST" use:enhance>
+		<label>
+			Username
+			<input name="username" type="text" id="username" bind:value={$form.username} {...$constraints.username} />
+			{#if $errors.username}<span class="invalid">{$errors.username}</span>{/if}
+		</label>
+		<label>
+			Email
+			<input name="email" type="email" id="Email" bind:value={$form.email} {...$constraints.email}/>
+			{#if $errors.email}<span class="invalid">{$errors.email}</span>{/if}
+		</label>
+		<label>
+			Password
+			<input name="password" type="password" id="password" bind:value={$form.password} {...$constraints.password} />
+			{#if $errors.password}<span class="invalid">{$errors.password}</span>{/if}
+		</label>
+		<label>
+			Confirm Password
+			<input name="confirmPassword" type="password" id="confirmPassword" bind:value={$form.confirmPassword} {...$constraints.confirmPassword} />
+			{#if $errors.confirmPassword}<span class="invalid">{$errors.confirmPassword}</span>{/if}
+		</label>
+		<button>Register{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin"></i></span>{/if}</button>
+	</form>
+</div>
 
-<h1>Register</h1>
-<form method="POST" use:enhance>
-	<label>
-		Username
-		<input name="username" type="text" id="username" required />
-	</label>
-	<label>
-		Email
-		<input name="email" type="email" id="Email" required />
-	</label>
-	<label>
-		Password
-		<input name="password" type="password" id="password" required />
-	</label>
-	<label>
-		Confirm Password
-		<input name="confirmPassword" type="password" id="confirmPassword" required />
-	</label>
-	<button>Register</button>
-	{#if form?.alreadyExists}<p class="error">Username already exists!</p>{/if}
-	{#if form?.noMatch}<p class="error">Passwords don't match!</p>{/if}
-</form>
+<style>
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.invalid {
+		color: red;
+	}
+</style>
