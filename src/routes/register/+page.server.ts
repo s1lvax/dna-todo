@@ -9,6 +9,7 @@ const registerSchema = z.object({
 	username: z
 		.string()
 		.min(3)
+		.max(20)
 		.refine((value) => /^[a-zA-Z0-9]+$/.test(value), {
 			message: 'Username must contain only letters and numbers.'
 		}),
