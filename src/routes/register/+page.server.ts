@@ -6,7 +6,7 @@ import { superValidate, setError } from 'sveltekit-superforms/server';
 import bcrypt from 'bcrypt';
 
 const registerSchema = z.object({
-	username: z.string(),
+	username: z.string().min(3),
 	email: z.string().email(),
 	password: z.string().min(5),
 	confirmPassword: z.string().min(5)
