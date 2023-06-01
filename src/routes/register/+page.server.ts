@@ -65,7 +65,8 @@ export const actions = {
 				data: {
 					username,
 					email,
-					encryptedPassword
+					encryptedPassword,
+					userAuthToken: crypto.randomUUID()
 				}
 			});
 		} catch (err) {

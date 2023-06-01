@@ -19,6 +19,10 @@ model User {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   username String @unique
   email   String   @unique
-  encryptedPassword String?
+  encryptedPassword String
+  userAuthToken String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   todos   Todo[]
 }
