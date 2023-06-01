@@ -53,14 +53,14 @@ export const actions = {
 			return setError(form, 'username', 'Username already exists.');
 		}
 
-		//encrypt password
-		const saltRounds = 10;
-
-		const salt = bcrypt.genSaltSync(saltRounds);
-		const hash = bcrypt.hashSync(password, salt);
-
 		//if all checks pass, create user
 		try {
+			//encrypt password
+			const saltRounds = 10;
+			const salt = bcrypt.genSaltSync(saltRounds);
+			const hash = bcrypt.hashSync(password, salt);
+
+			//add user to db
 			await prisma.user.create({
 				data: {
 					username,
