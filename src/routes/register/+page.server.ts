@@ -37,6 +37,11 @@ export const actions = {
 			confirmPassword: string;
 		};
 
+		//passwords don't match
+		if (password !== confirmPassword) {
+			return setError(form, 'password', 'Passwords do not match.');
+		}
+
 		//user already exists
 		const existingUser = await prisma.user.findUnique({
 			where: {
@@ -45,11 +50,6 @@ export const actions = {
 		});
 		if (existingUser) {
 			return setError(form, 'username', 'Username already exists.');
-		}
-
-		//passwords don't match
-		if (password !== confirmPassword) {
-			return setError(form, 'password', 'Passwords do not match.');
 		}
 
 		//if all checks pass, create user
