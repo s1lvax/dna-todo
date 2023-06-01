@@ -1,17 +1,15 @@
 <script lang="ts">
 	//superforms
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
-	import type { PageData } from '.././$types';
 	import { superForm } from 'sveltekit-superforms/client'
-	export let data: PageData;
+	export let data;
 
 	// superform API:
-	const { form, enhance, errors, constraints, delayed, timeout  } = superForm(data.form, {
+	const { form, enhance, errors, constraints, delayed  } = superForm(data.form, {
 		multipleSubmits: 'prevent'
 	});
 
 </script>
-<SuperDebug data={$form} />
 <div class="container">
 	<h1>Register</h1>
 	<form method="POST" use:enhance>
