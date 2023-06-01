@@ -6,7 +6,12 @@ import { superValidate, setError } from 'sveltekit-superforms/server';
 import bcrypt from 'bcrypt';
 
 const registerSchema = z.object({
-	username: z.string().min(3),
+	username: z
+		.string()
+		.min(3)
+		.refine((value) => /^[a-zA-Z0-9]+$/.test(value), {
+			message: 'Username must contain only letters and numbers.'
+		}),
 	email: z.string().email(),
 	password: z.string().min(5),
 	confirmPassword: z.string().min(5)
