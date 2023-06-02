@@ -52,5 +52,24 @@ export const actions: Actions = {
 
 		//always return form in superforms
 		return { form };
+	},
+	deleteTask: async ({ url }) => {
+		//get task id from url
+		const id = url.searchParams.get('id');
+
+		//if no id found, return error
+		if (!id) {
+			return fail(400, { message: 'Invalid request' });
+		}
+
+		//delete tasks
+		try {
+			await prisma.todo.delete({
+				where: { id: id }
+			});
+		} catch (err) {
+			console.log(err);
+			return fail(500, { message: 'Something went wrong.' });
+		}
 	}
 };
