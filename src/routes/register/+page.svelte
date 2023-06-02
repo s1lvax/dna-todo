@@ -2,6 +2,7 @@
 	//superforms
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { fade } from 'svelte/transition';
 	export let data;
 
 	// superform API:
@@ -10,7 +11,7 @@
 	});
 </script>
 
-<div class="flex items-center justify-center h-screen flex-col">
+<div class="flex items-center justify-center h-screen flex-col" transition:fade>
 	<h1 class="h1 m-10">Register</h1>
 	<form method="POST" use:enhance class="flex text-center justify-center items-center flex-col">
 		<label for="username" class="label"> Username </label>
