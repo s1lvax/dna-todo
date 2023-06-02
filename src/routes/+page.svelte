@@ -1,4 +1,8 @@
-<div class="flex items-center justify-center h-screen flex-col">
+<script lang="ts">
+	import { fade } from 'svelte/transition';
+</script>
+
+<div class="flex items-center justify-center h-screen flex-col" transition:fade>
 	<h1 class="h1 m-10">Welcome</h1>
 	<div class="flex gap-8">
 		<form action="/login">
