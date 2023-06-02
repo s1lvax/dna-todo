@@ -10,7 +10,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 		//get existing tasks
 		const existingTasks = await prisma.todo.findMany({
 			where: { authorId: locals.user.userid },
-			select: { title: true, body: true, createdAt: true }
+			select: { id: true, title: true, body: true, createdAt: true }
 		});
 
 		return { existingTasks };

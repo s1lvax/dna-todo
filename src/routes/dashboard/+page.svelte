@@ -58,14 +58,20 @@
 				<p>You don't have any tasks.</p>
 			{/if}
 			{#each data.existingTasks as task}
-				<div class="card p-4">
-					<header class="card-header"><h4 class="h4">{task.title}</h4></header>
-					<section class="p-4 italic">{task.body}</section>
-					<div class="text-center">
-						<a href="" class="m-3"><i class="fa-solid fa-trash" /></a>
-						<a href=""><i class="fa-solid fa-pen" /></a>
+				<form action="?/deleteTask" method="POST">
+					<div class="card p-4">
+						<header class="card-header"><h4 class="h4">{task.title}</h4></header>
+						<section class="p-4 italic">{task.body}</section>
+						<div class="text-center">
+							<button formaction="?/deleteTask&id={task.id}" type="submit" id="deleteTask"
+								><i class="fa-solid fa-trash" /></button
+							>
+							<button formaction="?/editTask" type="submit" id="editTask"
+								><i class="fa-solid fa-pen" /></button
+							>
+						</div>
 					</div>
-				</div>
+				</form>
 			{/each}
 		</div>
 	</div>
