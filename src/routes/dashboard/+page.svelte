@@ -1,25 +1,35 @@
 <script lang="ts">
 	//the page store has access to all the load functions
 	import { page } from '$app/stores';
-	import { is_empty } from 'svelte/internal';
-
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	//get page data
 	export let data: PageData;
 
 	//superforms API:
-	const { form, enhance } = superForm(data.form);
+	const { form, enhance, errors, constraints } = superForm(data.form);
 </script>
 
 <h1>Hi {data.user.username}</h1>
 
 <form method="POST" use:enhance action="?/createTask">
 	<label for="title">Task title</label>
-	<input type="text" name="title" bind:value={$form.title} />
+	<input
+		type="text"
+		name="title"
+		bind:value={$form.title}
+		data-invalid={$errors.title}
+		{...$constraints.title}
+	/>
 
 	<label for="description">Task description</label>
-	<input type="text" name="body" bind:value={$form.body} />
+	<input
+		type="text"
+		name="body"
+		bind:value={$form.body}
+		data-invalid={$errors.body}
+		{...$constraints.body}
+	/>
 	<button type="submit">Add Task</button>
 </form>
 
