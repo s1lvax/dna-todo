@@ -18,7 +18,7 @@
 			name="username"
 			type="text"
 			id="username"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.username}
 			bind:value={$form.username}
 			{...$constraints.username}
@@ -29,7 +29,7 @@
 			name="email"
 			type="email"
 			id="email"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.email}
 			bind:value={$form.email}
 			{...$constraints.email}
@@ -40,7 +40,7 @@
 			name="password"
 			type="password"
 			id="password"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.password}
 			bind:value={$form.password}
 			{...$constraints.password}
@@ -51,13 +51,13 @@
 			name="confirmPassword"
 			type="password"
 			id="confirmPassword"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.confirmPassword}
 			bind:value={$form.confirmPassword}
 			{...$constraints.confirmPassword}
 		/>
 		{#if $errors.confirmPassword}<span class="invalid">{$errors.confirmPassword}</span>{/if}
-		<button class="btn variant-filled-primary m-5 w-full"
+		<button class="btn variant-filled-primary m-5 w-full rounded-lg"
 			>Register{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin" /></span
 				>{/if}</button
 		>

@@ -18,7 +18,7 @@
 			name="username"
 			type="text"
 			id="username"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.username}
 			bind:value={$form.username}
 			{...$constraints.username}
@@ -29,13 +29,13 @@
 			name="password"
 			type="password"
 			id="password"
-			class="input m-2"
+			class="input m-2 rounded-lg"
 			data-invalid={$errors.password}
 			bind:value={$form.password}
 			{...$constraints.password}
 		/>
 		{#if $errors.password}<span class="invalid">{$errors.password}</span>{/if}
-		<button class="btn variant-filled-primary m-5 w-full"
+		<button class="btn variant-filled-primary m-5 w-full rounded-lg"
 			>Login{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin" /></span
 				>{/if}</button
 		>
