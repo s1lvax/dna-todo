@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { superValidate, setError } from 'sveltekit-superforms/server';
 import type { Actions } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
+import type { PageServerLoad } from './$types';
 
 //
 
@@ -18,7 +19,11 @@ const loginSchema = z.object({
 	password: z.string().min(5).max(30)
 });
 
-export const load = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
+	//if user is logged in, go to dashboard
+	if (locals.user) {
+		throw redirect(302, '/dashboard');
+	}
 	// Server API:
 	const form = await superValidate(loginSchema);
 

@@ -1,6 +1,6 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { prisma } from '../../lib/server/prisma';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { z } from 'zod';
 import { superValidate, setError } from 'sveltekit-superforms/server';
 import bcrypt from 'bcrypt';
@@ -18,7 +18,11 @@ const registerSchema = z.object({
 	confirmPassword: z.string().min(5)
 });
 
-export const load = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
+	//if user is logged in, go to dashboard
+	if (locals.user) {
+		throw redirect(302, '/dashboard');
+	}
 	// Server API:
 	const form = await superValidate(registerSchema);
 
