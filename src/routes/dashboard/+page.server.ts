@@ -1,9 +1,56 @@
-import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
+import { redirect, fail } from '@sveltejs/kit';
+import { z } from 'zod';
+import { superValidate } from 'sveltekit-superforms/server';
+import { prisma } from '$lib/server/prisma';
+
+const todoSchema = z.object({
+	title: z.string().min(3).max(15),
+	body: z.string().optional()
+});
 
 export const load: PageServerLoad = async ({ locals }) => {
 	//protected route (we get this from the hooks)
 	if (!locals.user) {
 		throw redirect(302, '/login');
+	}
+	//superform
+	const form = await superValidate(todoSchema);
+
+	return { form };
+};
+
+export const actions: Actions = {
+	createTask: async ({ request, locals }) => {
+		//validate form
+		const form = await superValidate(request, todoSchema);
+
+		//if form is invalid, return error and form
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		//get data from form
+		const { title, body } = form.data as {
+			title: string;
+			body: string;
+		};
+
+		//input todo in database
+		try {
+			await prisma.todo.create({
+				data: {
+					title: title,
+					body: body,
+					authorId: locals.user.userid
+				}
+			});
+		} catch (error) {
+			console.log(error);
+			return fail(500, { form });
+		}
+
+		//always return form in superforms
+		return { form };
 	}
 };

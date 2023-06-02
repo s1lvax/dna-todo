@@ -15,13 +15,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const user = await prisma.user.findUnique({
 		where: { userAuthToken: session },
 		//just get the username, we don't want to return passwords
-		select: { username: true }
+		select: { username: true, id: true }
 	});
 
 	if (user) {
 		//populate the events local with the username so that we can use it everywhere on the project
 		event.locals.user = {
-			username: user.username
+			username: user.username,
+			userid: user.id
 		};
 	}
 
