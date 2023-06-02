@@ -5,7 +5,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/server/prisma';
 
 const todoSchema = z.object({
-	title: z.string().min(3).max(15),
+	title: z.string().min(3).max(40),
 	body: z.string().optional()
 });
 
