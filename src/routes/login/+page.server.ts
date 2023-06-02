@@ -26,7 +26,7 @@ export const load = async () => {
 	return { form };
 };
 
-export const actions = {
+export const actions: Actions = {
 	//named default because there's just one
 	default: async ({ request, cookies }) => {
 		//validate form using Zod
