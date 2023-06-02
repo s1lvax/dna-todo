@@ -12,7 +12,7 @@
 
 <div class="flex items-center justify-center h-screen flex-col">
 	<h1 class="h1 m-10">Login</h1>
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance class="flex text-center justify-center items-center flex-col">
 		<label for="username" class="label"> Username </label>
 		<input
 			name="username"
@@ -42,23 +42,3 @@
 	</form>
 	<p>Don't have an account? <a class="anchor" href="/register">Register Here</a></p>
 </div>
-
-<style>
-	.container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-	}
-
-	form {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-	}
-
-	.invalid {
-		color: red;
-	}
-</style>
