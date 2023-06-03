@@ -8,7 +8,7 @@
 	export let data: PageData;
 
 	//superforms API:
-	const { form, enhance, errors, constraints } = superForm(data.form, {
+	const { form, enhance, errors, constraints, delayed } = superForm(data.form, {
 		multipleSubmits: 'prevent'
 	});
 </script>
@@ -48,7 +48,8 @@
 					{...$constraints.body}
 				/>
 				<button class="btn variant-filled-primary m-5 w-full rounded-lg" type="submit"
-					>Add Task</button
+					>{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin" /></span>{/if}Add
+					Task</button
 				>
 			</form>
 		</div>
