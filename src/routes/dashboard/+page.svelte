@@ -59,20 +59,23 @@
 				<p>You don't have any tasks.</p>
 			{/if}
 			{#each data.existingTasks as task}
-				<form action="?/deleteTask" method="POST" use:enhance>
-					<div class="card p-4">
-						<header class="card-header"><h4 class="h4">{task.title}</h4></header>
-						<section class="p-4 italic">{task.body}</section>
-						<div class="text-center">
-							<button formaction="?/deleteTask&id={task.id}" type="submit" id="deleteTask"
+				<div class="card p-4">
+					<header class="card-header"><h4 class="h4">{task.title}</h4></header>
+					<section class="p-4 italic">{task.body}</section>
+					<div class="text-center">
+						<form
+							action="?/deleteTask&id={task.id}"
+							method="POST"
+							class="text-center inline-block"
+							use:enhance
+						>
+							<button type="submit" id="deleteTask" class="inline-block"
 								><i class="fa-solid fa-trash" /></button
 							>
-							<button formaction="?/editTask" type="submit" id="editTask"
-								><i class="fa-solid fa-pen" /></button
-							>
-						</div>
+						</form>
+						<a href="/{task.id}"><i class="fa-solid fa-pen" /></a>
 					</div>
-				</form>
+				</div>
 			{/each}
 		</div>
 	</div>
