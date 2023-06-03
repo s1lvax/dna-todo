@@ -58,7 +58,7 @@
 				<p>You don't have any tasks.</p>
 			{/if}
 			{#each data.existingTasks as task}
-				<form action="?/deleteTask" method="POST">
+				<form action="?/deleteTask" method="POST" use:enhance>
 					<div class="card p-4">
 						<header class="card-header"><h4 class="h4">{task.title}</h4></header>
 						<section class="p-4 italic">{task.body}</section>
