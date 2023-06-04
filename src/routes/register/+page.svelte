@@ -11,15 +11,14 @@
 	});
 </script>
 
-<div class="flex items-center justify-center h-screen flex-col" transition:fade>
-	<h1 class="h1 m-10">Register</h1>
-	<form method="POST" use:enhance class="flex text-center justify-center items-center flex-col">
-		<label for="username" class="label"> Username </label>
+<div class="container" transition:fade>
+	<h1>Register</h1>
+	<form method="POST" use:enhance>
+		<label for="username"> Username </label>
 		<input
 			name="username"
 			type="text"
 			id="username"
-			class="input m-2 rounded-lg"
 			data-invalid={$errors.username}
 			bind:value={$form.username}
 			{...$constraints.username}
@@ -30,7 +29,6 @@
 			name="email"
 			type="email"
 			id="email"
-			class="input m-2 rounded-lg"
 			data-invalid={$errors.email}
 			bind:value={$form.email}
 			{...$constraints.email}
@@ -41,7 +39,6 @@
 			name="password"
 			type="password"
 			id="password"
-			class="input m-2 rounded-lg"
 			data-invalid={$errors.password}
 			bind:value={$form.password}
 			{...$constraints.password}
@@ -52,16 +49,15 @@
 			name="confirmPassword"
 			type="password"
 			id="confirmPassword"
-			class="input m-2 rounded-lg"
 			data-invalid={$errors.confirmPassword}
 			bind:value={$form.confirmPassword}
 			{...$constraints.confirmPassword}
 		/>
 		{#if $errors.confirmPassword}<span class="invalid">{$errors.confirmPassword}</span>{/if}
-		<button class="btn variant-filled-primary m-5 w-full rounded-lg"
+		<button
 			>Register{#if $delayed}<span class="delayed"><i class="fa-solid fa-gear fa-spin" /></span
 				>{/if}</button
 		>
 	</form>
-	<p>Already have an account? <a class="anchor" href="/login">Login Here</a></p>
+	<p>Already have an account? <a href="/login">Login Here</a></p>
 </div>
