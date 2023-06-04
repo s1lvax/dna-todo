@@ -9,7 +9,7 @@ const config = {
 	preprocess: [
 		vitePreprocess(),
 		preprocess({
-			postcss: true
+			postcss: false
 		})
 	],
 

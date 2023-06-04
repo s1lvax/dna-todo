@@ -31,10 +31,14 @@ export const actions: Actions = {
 		}
 
 		//get data from form
-		const { title, body } = form.data as {
+		let { title, body } = form.data as {
 			title: string;
 			body: string;
 		};
+
+		if (body == null) {
+			body = 'No description.';
+		}
 
 		//input todo in database
 		try {
