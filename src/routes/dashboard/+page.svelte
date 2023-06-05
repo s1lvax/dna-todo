@@ -26,9 +26,9 @@
 	</header>
 	<main class="container">
 		<div class="grid">
-			<div class="container container-padding">
+			<div class="container stick">
 				<h2>Create Tasks</h2>
-				<form method="POST" use:enhance action="?/createTask">
+				<form method="POST" use:enhance action="?/createTask" class="stick">
 					<label class="label" for="title">Task title</label>
 					<input
 						type="text"
@@ -76,3 +76,12 @@
 		</div>
 	</main>
 </body>
+
+<style>
+	@media (min-width: 992px) {
+		.stick {
+			position: sticky;
+			top: 0;
+		}
+	}
+</style>
