@@ -13,11 +13,17 @@
 </header>
 <main class="container">
 	<div class="container" transition:fade>
-		<form method="POST" use:enhance action="?/editTask">
+		<form
+			method="POST"
+			use:enhance={() => {
+				return ({ update }) => update({ reset: false });
+			}}
+			action="?/editTask"
+		>
 			<label class="label" for="title">Task title</label>
 			<input type="text" name="title" value={data.task.title} />
 
-			<label class="label" for="description">Task description</label>
+			<label class="label" for="body">Task description</label>
 			<textarea name="body" value={data.task.body} />
 
 			<button type="submit">Update Task</button>

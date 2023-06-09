@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		}
 	});
 	if (!task) {
-		throw error(404, 'Article not found');
+		throw error(404, 'Task not found');
 	}
 
 	return { task };
